@@ -31,7 +31,7 @@
             <hr>
             <div id="imagen-container"></div>
             <div class="container text-center mt-4">
-            <img src="imagen/musica.jpeg" width="1100" height="400" alt="Imagen de música">
+            <img src="${pageContext.request.contextPath}/public/imagen/musica.jpeg" width="1100" height="400" alt="Imagen de música">
             </div>
           </div>
         </div>
