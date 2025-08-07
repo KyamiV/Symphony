@@ -9,42 +9,94 @@ package com.mysymphony.centrosymphony;
  *
  * @author camiv
  */
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.SQLException;
-
-/**
- *
- * @author eduar
- */
-public class ConexionDao {
-    // Declaración de variables para la conexion a la base de datos
-    private static final String url ="jdbc:mysql://localhost:3306/centrouniversitario";
-    private static final String username="root";
-    private static final String pass="";
-    
-    // conexion base de datos
-    public static Connection obtenerConexion(){
-        Connection conn = null;
-            try {
-                  Class.forName("com.mysql.cj.jdbc.Driver");
-                  conn = DriverManager.getConnection(url,username,pass);
-              } catch (Exception e) {
-                  System.out.println("Error: " + e.getMessage());
-              }
-
-              return conn;
+public class Estudiante {
+    private int id;
+    private String nombreAlumno;
+    private String apellidoAlumno;
+    private String telefono;
+    private String direccion;
+    private String correo;
+    private String Genero;
+    // constructor vacio
+    public Estudiante()
+    {}
+    //constructor de estudiante
+    public Estudiante(int id,String nombreAlumno, String apellidoAlumno, String telefono,String direccion, String correo, String genero)
+    {
+     this.id=id;
+     this.nombreAlumno=nombreAlumno;
+     this.apellidoAlumno=apellidoAlumno;
+     this.telefono=telefono;
+     this.direccion=direccion;
+     this.correo=correo;
+     this.Genero=genero;
     }
-    public static void cerrarConexion(Connection Conn){
-        try{
-            if(Conn !=null){
-                Conn.close();
-            }
-        }catch(Exception e){
-        System.out.println("Error al conectarnos"+e.toString());
 
-        }
+    public int getId() {
+        return id;
     }
-    
-    
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombreAlumno() {
+        return nombreAlumno;
+    }
+
+    public void setNombreAlumno(String nombreAlumno) {
+        this.nombreAlumno = nombreAlumno;
+    }
+
+    public String getApellidoAlumno() {
+        return apellidoAlumno;
+    }
+
+    public void setApellidoAlumno(String apellidoAlumno) {
+        this.apellidoAlumno = apellidoAlumno;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getGenero() {
+        return Genero;
+    }
+
+    public void setGenero(String Genero) {
+        this.Genero = Genero;
+    }
+    @Override
+    public String toString(){
+     return "Nota{" +
+               "id=" + id +
+               ", nombreAlumno='" + nombreAlumno + '\'' +
+               ", apellidoAlumno='" + apellidoAlumno + '\'' +
+               ", telefono=" + telefono +
+               ", direccion='" + direccion + '\'' +
+               ", correo=" + correo +
+               ", genero=" +Genero +
+               '}';
+    }
 }
