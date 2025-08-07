@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="java.util.List"%>
-<%@page import="com.symphony.symphony.Estudiante"%>
+<%@page import="com.mysymphony.centrosymphony.Estudiante"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
