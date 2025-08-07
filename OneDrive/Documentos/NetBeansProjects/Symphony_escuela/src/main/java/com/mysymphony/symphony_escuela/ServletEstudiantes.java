@@ -4,86 +4,138 @@
  */
 package com.mysymphony.symphony_escuela;
 
-import dao.EstudianteDAO;
-import modelo.Estudiante;
-
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.io.PrintWriter;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+/**
+ *
+ * @author cami
+ */
+@WebServlet(name = "ServletEstudiante", urlPatterns = {"/ServletEstudiante"})
+public class ServletEstudiante extends HttpServlet {
 
-@WebServlet("/ServletEstudiantes")
-public class ServletEstudiantes extends HttpServlet {
-    private Connection con;
-
-    @Override
-    public void init() throws ServletException {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sia", "root", "");
-        } catch (Exception e) {
-            throw new ServletException("Error de conexión a la base de datos", e);
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-        EstudianteDAO dao = new EstudianteDAO(con);
-
-        try {
-            if ("guardar".equals(action)) {
-                Estudiante e = new Estudiante();
-                e.setNombre(request.getParameter("nombre"));
-                e.setCorreo(request.getParameter("correo"));
-                e.setPrograma(request.getParameter("programa"));
-                dao.guardar(e);
-                response.sendRedirect("listarEstudiantes.jsp");
-            } else if ("modificar".equals(action)) {
-                Estudiante e = new Estudiante();
-                e.setId(Integer.parseInt(request.getParameter("id")));
-                e.setNombre(request.getParameter("nombre"));
-                e.setCorreo(request.getParameter("correo"));
-                e.setPrograma(request.getParameter("programa"));
-                dao.modificar(e);
-                response.sendRedirect("listarEstudiantes.jsp");
-            }
-        } catch (SQLException ex) {
-            throw new ServletException(ex);
-        }
+        response.setContentType("text/html;charset=UTF-8");
+        
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        EstudianteDAO dao = new EstudianteDAO(con);
+        
         String action = request.getParameter("action");
-
-        try {
-            if ("mostrar".equals(action)) {
-                List<Estudiante> lista = dao.listar();
-                request.setAttribute("lista", lista);
-                RequestDispatcher rd = request.getRequestDispatcher("listarEstudiantes.jsp");
-                rd.forward(request, response);
-            } else if ("editar".equals(action)) {
-                int id = Integer.parseInt(request.getParameter("id"));
-                Estudiante est = dao.obtenerPorId(id);
-                request.setAttribute("estudiante", est);
-                RequestDispatcher rd = request.getRequestDispatcher("modificarEstudiante.jsp");
-                rd.forward(request, response);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace(); // Para ver el error en consola
-            request.setAttribute("error", "Ocurrió un error al procesar la solicitud. Intenta de nuevo.");
-            RequestDispatcher rd = request.getRequestDispatcher("listarEstudiantes.jsp");
-            rd.forward(request, response);
-            throw new ServletException(ex);
+        if("mostrar".equals(action)){
+            mostrarEstudiantes(request,response);
+        }else if("modificar".equals(action)){
+            // Mostrar el formulario con los datos del estudiante teniendo como filtro el ID
+            int id = Integer.parseInt(request.getParameter("id"));
+            EstudianteDao estudianteDao = new EstudianteDao();
+            Estudiante estudiante =estudianteDao.obtenerEstudiantePorId(id);
+            request.setAttribute("estudiante",estudiante);
+            request.getRequestDispatcher("ModificarEstudiantes.jsp").forward(request, response);
         }
     }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if("guardar".equals(action)){
+          guardarEstudiantes(request,response);
+        }else if("actualizar".equals(action)){
+            ActualizarEstudiantes(request,response); 
+        }
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+    
+    public void guardarEstudiantes(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException{
+        String nombre = request.getParameter("nombre");
+        String apellido =request.getParameter("apellido");
+        String telefono = request.getParameter("telefono");
+        String direccion = request.getParameter("direccion");
+        String correo = request.getParameter("correo");
+        String genero = request.getParameter("genero");
+        EstudianteDao estudianteDao = new EstudianteDao();
+        estudianteDao.InsertarEstudiante(nombre, apellido, telefono, direccion, correo, genero);
+        //Redirigimos al JSP con mensaje de exito
+        response.sendRedirect("GuardarEstudiante.jsp?mensaje=Ok");
+    }
+     public void mostrarEstudiantes(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException{
+            EstudianteDao estudianteDao = new EstudianteDao();
+            List<Estudiante> estudiantes = estudianteDao.ListarEstudiantes();
+            request.setAttribute("listadestudiantes",estudiantes);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+            mostrarEstudiantesModificar(request,response);
+            
+     }
+     
+     
+     public void mostrarEstudiantesModificar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException{
+            EstudianteDao estudianteDao = new EstudianteDao();
+            List<Estudiante> estudiantes = estudianteDao.ListarEstudiantes();
+            request.setAttribute("listadestudiantes",estudiantes);
+            request.getRequestDispatcher("ModificarEstudiantes.jsp").forward(request, response);
+     }
+     
+     public void ActualizarEstudiantes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+       int id = Integer.parseInt(request.getParameter("id"));
+       String nombre = request.getParameter("nombre");
+       String apellido = request.getParameter("nombre");
+       String telefono = request.getParameter("telefono");
+       String direccion = request.getParameter("direccion");
+       String correo = request.getParameter("correo");
+       String genero = request.getParameter("genero");
+       EstudianteDao estudianteDao = new EstudianteDao();
+       estudianteDao.ActualizarEstudiante(id, nombre, apellido, telefono, direccion, correo, genero);
+       response.sendRedirect("ServletEstudiante?action=mostrar");
+     }
+
+     
+
 }
