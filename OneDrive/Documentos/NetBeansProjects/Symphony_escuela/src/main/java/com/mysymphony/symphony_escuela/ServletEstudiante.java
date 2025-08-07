@@ -4,10 +4,6 @@
  */
 package com.mysymphony.symphony_escuela;
 
-import com.mysymphony.symphony_escuela.Estudiante;
-import com.mysymphony.symphony_escuela.Estudiante;
-import com.mysymphony.symphony_escuela.EstudianteDao;
-import com.mysymphony.symphony_escuela.EstudianteDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

@@ -1,11 +1,11 @@
 <%-- 
     Document   : index
-    Created on : 6/08/2025, 12:43:44 p. m.
+    Created on : 1/08/2025, 12:43:44 p. m.
     Author     : camiv
 --%>
 
 <%@page import="java.util.List"%>
-<%@page import="com.universidad.universidad.Estudiante"%>
+<%@page import="com.mysymphony.symphony_escuela"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
@@ -14,13 +14,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-        <title>Sistema de Informacion Academico - SIA</title>
+        <title>Sistema de Informacion Academico Symphony</title>
     </head>
     
     <body>
          <div class="container">
             <div class="card mt-5">
-                <h2 class="text-center mt-3"> Gestión y Registro de Estudiantes Universitarios</h2>
+                <h2 class="text-center mt-3"> Gestión y Registro de Estudiantes Symphony</h2>
                 <div class="card-body">
                     <div class="d-grip gap-2 d-md-flex justify-content-md-end mb-3">
                         <a href="GuardarEstudiante.jsp" class="btn btn-primary">Nuevo Estudiante</a>

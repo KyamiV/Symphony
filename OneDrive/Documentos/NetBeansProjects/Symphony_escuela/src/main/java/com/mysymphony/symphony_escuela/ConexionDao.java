@@ -15,8 +15,8 @@ import java.sql.SQLException;
 
 public class ConexionDao {
  // Declaración de variables para la conexion a la base de datos
-    private static final String url ="jdbc:mysql://localhost:3306/centrouniversitario";
-    private static final String username="root";
+    private static final String url ="jdbc:mysql://localhost:3306/symphony_escuela";
+    private static final String username ="root";
     private static final String pass="";
     
 // conexion base de datos
