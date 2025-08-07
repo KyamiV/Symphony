@@ -17,14 +17,12 @@
     <form action ="" method=" ">
         <div class="container mt-3">
                 <div class="card-body">
-                    
-                    <div class="col">
                     <!-- Título -->
                     <h2 class="text-center text-primary fw-bold mb-4">Gestión y Registro de Estudiantes </h2>
 
                     <!-- Botón para nuevo estudiante -->
                     <div class="text-end mb-3">
-                        <a href="#" class="btn btn-success">Nuevo Estudiante</a>
+                        <a href="GuardarEstudiante.jsp" class="btn btn-success">Nuevo Estudiante</a>
                     </div>
                     <div class="d-flex justtify-center-safe">
                         <a href="Home.jsp" class="btn btn-warning">Regresar</a>

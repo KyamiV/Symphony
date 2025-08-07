@@ -5,61 +5,49 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Sistema de Informacion Academica SIA - Nuevo Estudiante</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMC">
+    <title>Sistema de Información Académica Symphony - Nuevo Estudiante</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="background-color:#C1CDCD;">
-    <div class="container mt-5">
-
-        <!-- Imagen de encabezado -->
-        <div class="text-center mb-4">
-            <img src="${pageContext.request.contextPath}/images/logo.png" alt="Logo del sistema" class="img-fluid" style="max-height: 120px;">
-        </div>
-
-        <h2 class="text-center">Formulario de Estudiantes</h2>
-
+    <div class="container">
         <form action="EstudianteServlet" method="post">
-            <div class="card mt-3">
+            <div class="card mt-4">
                 <div class="card-body">
+                    <div class="d-flex justify-content-start">
+                        <a href="GestionEstudiantes.jsp" class="btn btn-warning">Volver</a>
+                    </div>
+                    <hr>
+                    <h4 class="text-center">Registro de Estudiante</h4>
 
-                    <div class="col">
-                        <label>Nombre</label>
+                    <div class="mb-3 mt-3">
+                        <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" name="nombre" class="form-control" placeholder="Digite el nombre estudiante" required>
                     </div>
-
-                    <div class="col">
-                        <label>Apellido</label>
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
                         <input type="text" name="apellido" class="form-control" placeholder="Digite el apellido del estudiante" required>
                     </div>
-
-                    <div class="col">
-                        <label>Telefono</label>
-                        <input type="text" name="telefono" class="form-control" placeholder="Numero de Telefono" required>
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="text" name="telefono" class="form-control" placeholder="Número de Teléfono" required>
                     </div>
-
-                    <div class="col">
-                        <label>Direccion</label>
-                        <input type="text" name="direccion" class="form-control" placeholder="Digite direccion" required>
+                    <div class="mb-3">
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <input type="text" name="direccion" class="form-control" placeholder="Digite dirección" required>
                     </div>
-
-                    <div class="col">
-                        <label>Correo</label>
-                        <input type="text" name="correo" class="form-control" placeholder="Correo Electronico" required>
+                    <div class="mb-3">
+                        <label for="correo" class="form-label">Correo</label>
+                        <input type="email" name="correo" class="form-control" placeholder="Correo Electrónico" required>
                     </div>
-
-                    <div class="col">
-                        <label>Genero</label>
-                        <input type="text" name="genero" class="form-control" placeholder="Digite el genero" required>
+                    <div class="mb-3">
+                        <label for="genero" class="form-label">Género</label>
+                        <input type="text" name="genero" class="form-control" placeholder="Digite el género" required>
                     </div>
-
-                    <div class="col mt-3 text-center">
+                    <div class="d-grid mt-4">
                         <button type="submit" name="action" value="guardar" class="btn btn-primary">Guardar</button>
                     </div>
-
                 </div>
             </div>
         </form>

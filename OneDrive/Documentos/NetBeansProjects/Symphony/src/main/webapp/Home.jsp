@@ -1,70 +1,44 @@
 <%-- 
     Document   : index
-    Created on : 7/08/2025, 1:00:03?p.爉.
+    Created on : 7/08/2025, 1:00:03鈥痯.聽m.
     Author     : camiv
 --%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="es">
-<head>
+  <head>
     <meta charset="UTF-8">
-    <title>Gesti髇 y Registro de Estudiantes</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            text-align: center;
-        }
-        h1 {
-            color: #007bff;
-        }
-        .button {
-            padding: 10px 20px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .button-green {
-            background-color: #28a745;
-            color: white;
-        }
-        .button-yellow {
-            background-color: #ffc107;
-            color: black;
-        }
-        table {
-            margin: 0 auto;
-            border-collapse: collapse;
-            width: 80%;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
-<body>
-    <h1>Gesti髇 y Registro de Estudiantes</h1>
-    <button class="button button-green">Nuevo Estudiante</button>
-    <button class="button button-yellow">Regresar</button>
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Tel閒ono</th>
-            <th>Direcci髇</th>
-            <th>Correo</th>
-            <th>G閚ero</th>
-            <th>Acciones</th>
-        </tr>
-        <tr>
-            <td colspan="8">No hay estudiantes registrados.</td>
-        </tr>
-    </table>
-</body>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Sistema de Informaci贸n Acad茅mica Symphony</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  </head>
+  <body style="background-color:#00E5EE;">
+
+    <div class="container mt-5">
+      <div class="card shadow">
+        <div class="card-body text-center">
+
+          <!-- T铆tulo -->
+          <h2 class="text-primary fw-bold mb-4">SISTEMA DE INFORMACI脫N ACAD脡MICA SYMPHONY</h2>
+
+          <!-- Botones distribuidos con Bootstrap -->
+          <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+            <a href="GestionEstudiantes.jsp" class="btn btn-outline-info">Gesti贸n de Usuarios</a>
+            <a href="#" class="btn btn-outline-info">Gesti贸n de Materias</a>
+            <a href="#" class="btn btn-outline-info">Gesti贸n de Docentes</a>
+            <a href="#" class="btn btn-outline-info">Gesti贸n de Clases Disponibles</a>
+          </div>
+
+          <!-- Imagen -->
+          <img src="img/5.png" alt="logo" class="img-fluid rounded mx-auto d-block" style="max-width: 200px;">
+          <p class="mt-2 text-muted">Imagen M煤sica</p>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+  </body>
 </html>
