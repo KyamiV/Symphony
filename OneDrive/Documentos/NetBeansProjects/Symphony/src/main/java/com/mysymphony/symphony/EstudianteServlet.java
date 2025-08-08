@@ -2,13 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+package com.mysymphony.symphony;
 
 /**
  *
  * @author camiv
  */
-package com.mysymphony.symphony;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,50 +15,66 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
+import com.mysymphony.symphony.Estudiante;
+import com.mysymphony.symphony.EstudianteDao;
 
 @WebServlet("/EstudianteServlet")
 public class EstudianteServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String nombre = request.getParameter("nombre");
-        String apellido = request.getParameter("apellido");
-        String telefono = request.getParameter("telefono");
-        String direccion = request.getParameter("direccion");
-        String correo = request.getParameter("correo");
-        String genero = request.getParameter("genero");
 
-        Connection conn = null;
-        PreparedStatement stmt = null;
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/symphony", "root", "");
+        String accion = request.getParameter("accion");
+        EstudianteDao dao = new EstudianteDao();
 
-            String sql = "INSERT INTO estudiantes (nombre, apellido, telefono, direccion, correo, genero) VALUES (?, ?, ?, ?, ?, ?)";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, nombre);
-            stmt.setString(2, apellido);
-            stmt.setString(3, telefono);
-            stmt.setString(4, direccion);
-            stmt.setString(5, correo);
-            stmt.setString(6, genero);
+        if ("insertar".equals(accion)) {
+            Estudiante est = new Estudiante();
+            est.setNombre(request.getParameter("nombre"));
+            est.setApellido(request.getParameter("apellido"));
+            est.setTelefono(request.getParameter("telefono"));
+            est.setDireccion(request.getParameter("direccion"));
+            est.setCorreo(request.getParameter("correo"));
+            est.setGenero(request.getParameter("genero"));
 
-            stmt.executeUpdate();
-            response.sendRedirect("GestionEstudiantes.jsp");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.getWriter().println("Error al guardar el estudiante.");
-        } finally {
-            try {
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            if (dao.CorreoExiste(est.getCorreo())) {
+                response.sendRedirect("GuardarEstudiante.jsp?mensaje=correo_duplicado");
+            } else {
+                dao.InsertarEstudiante(est);
+                response.sendRedirect("GuardarEstudiante.jsp?mensaje=ok");
             }
+
+        } else if ("actualizar".equals(accion)) {
+            Estudiante est = new Estudiante();
+            est.setId(Integer.parseInt(request.getParameter("id")));
+            est.setNombre(request.getParameter("nombre"));
+            est.setApellido(request.getParameter("apellido"));
+            est.setTelefono(request.getParameter("telefono"));
+            est.setDireccion(request.getParameter("direccion"));
+            est.setCorreo(request.getParameter("correo"));
+            est.setGenero(request.getParameter("genero"));
+
+            if (dao.CorreoExiste(est.getCorreo()) && !dao.CorreoPerteneceA(est.getCorreo(), est.getId())) {
+                response.sendRedirect("GuardarEstudiante.jsp?id=" + est.getId() + "&mensaje=correo_duplicado");
+            } else {
+                dao.ActualizarEstudiante(est);
+                response.sendRedirect("GestionEstudiantes.jsp?mensaje=actualizado");
+            }
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String accion = request.getParameter("accion");
+        EstudianteDao dao = new EstudianteDao();
+
+        if ("eliminar".equals(accion)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            dao.EliminarEstudiante(id);
+            response.sendRedirect("GestionEstudiantes.jsp?mensaje=eliminado");
         }
     }
 }
