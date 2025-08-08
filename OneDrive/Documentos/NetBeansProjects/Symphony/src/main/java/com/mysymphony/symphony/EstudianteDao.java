@@ -90,4 +90,27 @@ public class EstudianteDao {
             e.printStackTrace();
         }
     }
+
+    public Estudiante obtenerPorId(int id) {
+        Estudiante estudiante = null;
+        String sql = "SELECT * FROM estudiantes WHERE id = ?";
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                estudiante = new Estudiante();
+                estudiante.setId(rs.getInt("id"));
+                estudiante.setNombre(rs.getString("nombre"));
+                estudiante.setApellido(rs.getString("apellido"));
+                estudiante.setTelefono(rs.getString("telefono"));
+                estudiante.setDireccion(rs.getString("direccion"));
+                estudiante.setCorreo(rs.getString("correo"));
+                estudiante.setGenero(rs.getString("genero"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return estudiante;
+    }
 }
