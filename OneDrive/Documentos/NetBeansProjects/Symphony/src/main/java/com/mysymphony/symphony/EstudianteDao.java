@@ -113,4 +113,27 @@ public class EstudianteDao {
         }
         return estudiante;
     }
+
+    public List<Estudiante> obtenerTodos() {
+        List<Estudiante> lista = new ArrayList<>();
+        String sql = "SELECT * FROM estudiantes";
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Estudiante est = new Estudiante();
+                est.setId(rs.getInt("id"));
+                est.setNombre(rs.getString("nombre"));
+                est.setApellido(rs.getString("apellido"));
+                est.setTelefono(rs.getString("telefono"));
+                est.setDireccion(rs.getString("direccion"));
+                est.setCorreo(rs.getString("correo"));
+                est.setGenero(rs.getString("genero"));
+                lista.add(est);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
 }

@@ -16,9 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import com.mysymphony.symphony.Estudiante;
-import com.mysymphony.symphony.EstudianteDao;
-
 @WebServlet("/EstudianteServlet")
 public class EstudianteServlet extends HttpServlet {
 
@@ -39,10 +36,10 @@ public class EstudianteServlet extends HttpServlet {
             est.setGenero(request.getParameter("genero"));
 
             if (dao.CorreoExiste(est.getCorreo())) {
-                response.sendRedirect("GuardarEstudiante.jsp?mensaje=correo_duplicado");
+                response.sendRedirect("GuardarEstudiantes.jsp?mensaje=correo_duplicado");
             } else {
                 dao.InsertarEstudiante(est);
-                response.sendRedirect("GuardarEstudiante.jsp?mensaje=ok");
+                response.sendRedirect("GuardarEstudiantes.jsp?mensaje=ok");
             }
 
         } else if ("actualizar".equals(accion)) {
@@ -56,7 +53,7 @@ public class EstudianteServlet extends HttpServlet {
             est.setGenero(request.getParameter("genero"));
 
             if (dao.CorreoExiste(est.getCorreo()) && !dao.CorreoPerteneceA(est.getCorreo(), est.getId())) {
-                response.sendRedirect("GuardarEstudiante.jsp?id=" + est.getId() + "&mensaje=correo_duplicado");
+                response.sendRedirect("GuardarEstudiantes.jsp?id=" + est.getId() + "&mensaje=correo_duplicado");
             } else {
                 dao.ActualizarEstudiante(est);
                 response.sendRedirect("GestionEstudiantes.jsp?mensaje=actualizado");
@@ -75,6 +72,17 @@ public class EstudianteServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             dao.EliminarEstudiante(id);
             response.sendRedirect("GestionEstudiantes.jsp?mensaje=eliminado");
+
+        } else if ("editar".equals(accion)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            Estudiante estudiante = dao.obtenerPorId(id);
+
+            if (estudiante != null) {
+                request.setAttribute("estudiante", estudiante);
+                request.getRequestDispatcher("GuardarEstudiantes.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("GestionEstudiantes.jsp?mensaje=no_encontrado");
+            }
         }
     }
 }
